@@ -1,0 +1,476 @@
+﻿
+{% extends "basic.html" %}
+{% load static %}
+ 
+	{% block head %}
+  <style>
+    /* Container Styling */
+    .sign-in-container {
+        background: linear-gradient(135deg, #4b6cb7, #182848);
+        color: white;
+        padding: 50px 20px;
+        border-radius: 15px;
+        text-align: center;
+        box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        transition: background 0.5s ease-in-out;
+    }
+
+    .sign-in-title {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    .sign-in-text {
+        font-size: 1.2rem;
+        opacity: 0.9;
+    }
+
+    /* Role Container */
+    .role-container {
+        display: flex;
+        justify-content: center;
+        gap: 50px;
+        margin-top: 30px;
+    }
+
+    .role {
+        text-align: center;
+        cursor: pointer;
+        padding: 15px;
+        border-radius: 10px;
+        transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out, background 0.5s ease-in-out;
+    }
+
+    .role img {
+        width: 160px;
+        height: 160px;
+        border-radius: 50%;
+        transition: transform 0.3s ease-in-out;
+    }
+
+    /* Hover Effect - Gradient Transition */
+    .role:hover {
+        background: linear-gradient(135deg, #ff6a00, #ee0979);
+        transform: scale(1.1);
+        box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
+    }
+
+    .role:hover img {
+        transform: scale(1.15);
+    }
+
+    .role-name {
+        font-size: 1.5rem;
+        font-weight: bold;
+        margin-top: 10px;
+        transition: color 0.3s;
+    }
+
+    .role:hover .role-name {
+        color: #ffdd57;
+    }
+
+    .role-desc {
+        font-size: 1rem;
+        opacity: 0.8;
+    }
+
+    /* Section Styling */
+    .doctors-section {
+      text-align: center;
+      margin-top: 50px;
+      margin-bottom: 50px;
+  }
+
+  .doctors-section h2 {
+      font-size: 2.5rem;
+      font-weight: bold;
+      color: #333;
+      text-transform: uppercase;
+      position: relative;
+      display: inline-block;
+      padding-bottom: 10px;
+  }
+
+  .doctors-section h2::after {
+      content: '';
+      width: 80px;
+      height: 3px;
+      background: #ff8c00; /* Warm highlight */
+      display: block;
+      margin: auto;
+      margin-top: 5px;
+      border-radius: 2px;
+  }
+
+  /* Doctor Card */
+  .doctor-card {
+      background: white;
+      color: black;
+      border-radius: 15px;
+      text-align: center;
+      padding: 20px;
+      transition: transform 0.3s ease-in-out, box-shadow 0.3s ease-in-out;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      position: relative;
+      overflow: hidden;
+  }
+
+  .doctor-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+  }
+
+  .doctor-card h5 {
+      font-size: 1.5rem;
+      font-weight: bold;
+      margin-bottom: 10px;
+  }
+
+  .doctor-card img {
+      width: 220px;
+      height: 160px;
+      border-radius: 10px;
+      transition: transform 0.3s ease-in-out;
+  }
+
+  .doctor-card:hover img {
+      transform: scale(1.05);
+  }
+
+  .doctor-card p {
+      font-size: 1rem;
+      margin-top: 10px;
+      opacity: 0.9;
+  }
+
+  /* Specialization & Experience */
+  .doctor-specialization {
+      font-size: 1.5rem;
+      font-weight: bold;
+      color: white;
+      padding: 5px 10px;
+      border-radius: 5px;
+      display: inline-block;
+  }
+
+  .doctor-experience {
+      font-size: 1.5rem;
+      color: #666;
+      margin-top: 5px;
+  }
+
+  /* Color Codes for Specializations */
+  .card-cardiology { background: #ff5733; } /* Red */
+  .card-neurology { background: #3375ff; } /* Blue */
+  .card-orthopedics { background: #33c95c; } /* Green */
+
+  /* Appointment Button */
+  .appointment-btn {
+      margin-top: 10px;
+      padding: 8px 15px;
+      background: #ff8c00;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: background 0.3s;
+  }
+
+  .appointment-btn:hover {
+      background: #e67e00;
+  }
+
+    /* Footer Styling */
+    .footer-heading {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      text-transform: uppercase;
+      border-left: 5px solid #ff8c00;
+      padding-left: 10px;
+  }
+  
+  .footer-list {
+      list-style: none;
+      padding-left: 0;
+  }
+  
+  .footer-list li {
+      margin-bottom: 5px;
+  }
+  
+  .footer-link {
+      color: #ffcc00;
+      text-decoration: none;
+      transition: color 0.3s ease-in-out;
+  }
+  
+  .footer-link:hover {
+      color: #ff8c00;
+      text-decoration: underline;
+  }
+  
+  .footer-icons {
+      display: flex;
+      gap: 15px;
+      margin-top: 10px;
+  }
+  
+  .social-icon {
+      color: white;
+      font-size: 20px;
+      transition: transform 0.3s ease-in-out, color 0.3s ease-in-out;
+  }
+  
+  .social-icon:hover {
+      transform: scale(1.2);
+      color: #ff8c00;
+  }
+</style>
+
+{% endblock %}
+
+{% block body %}
+
+
+    
+<div class="jumbotron text-center bg-light p-5 rounded shadow">
+    <h1 class="display-4 text-primary font-weight-bold">Empower Your Health with AI</h1>
+    <p class="lead text-muted">
+        Take control of your well-being with our AI-powered disease prediction system. Get instant insights, 
+        personalized health recommendations, and connect with doctors effortlessly.
+    </p>
+    
+    <hr class="my-4">
+
+    <p class="text-secondary">
+        Our smart system analyzes symptoms using advanced data models to suggest possible health conditions. 
+        Stay ahead with early detection and seek timely medical attention.
+    </p>
+
+    {% if user.is_authenticated %}
+        <p class="text-success font-weight-bold">Welcome back! Explore more insights about your health.</p>
+    {% else %}
+        <button type="button" class="btn btn-primary btn-lg mt-3 px-4" data-toggle="modal" data-target=".bd-example-modal-lg">
+            Get Started
+        </button>
+        <p class="mt-2 text-muted">Join now and stay informed about your health.</p>
+</div>
+
+
+<br><br><br>
+<div class="container mt-5">
+  <div class="sign-in-container">
+      <h1 class="sign-in-title">Sign In As</h1>
+      <p class="sign-in-text">Select your role to access the platform.</p>
+
+      <div class="role-container">
+          <a href="{% url 'sign_in_admin' %}" class="role text-decoration-none text-white">
+              <img src="{% static 'homepage/images/admin.png' %}" alt="Admin">
+              <div class="role-name">Admin</div>
+              <div class="role-desc">Manage users and settings</div>
+          </a>
+
+          <a href="{% url 'sign_in_doctor' %}" class="role text-decoration-none text-white">
+              <img src="{% static 'homepage/images/doctor.png' %}" alt="Doctor">
+              <div class="role-name">Doctor</div>
+              <div class="role-desc">View patient details</div>
+          </a>
+
+          <a href="{% url 'sign_in_patient' %}" class="role text-decoration-none text-white">
+              <img src="{% static 'homepage/images/patient.png' %}" alt="Patient">
+              <div class="role-name">Patient</div>
+              <div class="role-desc">Book appointments</div>
+          </a>
+      </div>
+  </div>
+</div>
+    {% endif %}
+<br><br>
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+   
+<center>
+  <h1>Sign-In As</h1>
+  </center>
+<br><br>
+
+<center>
+<form>
+    <div class="container mt-5 mb-5">
+ <div class="row">
+    <div class="col">
+       <a href="{% url 'sign_in_admin' %}">
+<img  alt="admin" src="{% static 'homepage/images/admin.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_doctor' %}">
+<img  alt="doctor" src="{% static 'homepage/images/doctor.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'sign_in_patient' %}">
+<img  alt="patient" src="{% static 'homepage/images/patient.png' %}"  class="img">
+</a>
+    </div>
+  </div>
+  </div>
+</form>
+</center>
+
+    </div>
+  </div>
+</div>
+
+<!-- Large modal -->
+
+<div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+   
+<center>
+  <h1>Sign-Up  As</h1>
+  </center>
+<br><br>
+
+<center>
+<form>
+    <div class="container mt-5 mb-5 ml-5 mr-5">
+ <div class="row">
+
+    <div class="col">
+<a href="{% url 'signup_doctor' %}">
+<img  alt="doctor" src="{% static 'homepage/images/doctor.png' %}"  class="img">
+</a>
+    </div>
+
+    <div class="col">
+<a href="{% url 'signup_patient' %}">
+<img  alt="patient" src="{% static 'homepage/images/patient.png' %}"  class="img">
+</a>
+    </div>
+  </div>
+  </div>
+</form>
+</center>
+
+    </div>
+  </div>
+</div>
+
+<br><br><br><br>
+<div class="doctors-section">
+  <h2>Our Doctors</h2>
+
+  <div class="row mt-5">
+      <div class="col-md-4 mb-4">
+          <div class="doctor-card">
+              <h5>Dr. Manish Bansal</h5>
+              <img src="{% static 'homepage/images/c31.jpg' %}" alt="Dr. Manish Bansal">
+              <p class="doctor-specialization card-cardiology" style="font-size:1.4rem;">Cardiologist</p>
+              <p class="doctor-experience" style="font-size:1.6rem;">Experience: 15+ years</p>
+              <p style="font-size:1.2rem; font-weight: bold;">AIIMS Bhubaneswar, Odisha</p>
+              {% comment %} <button class="appointment-btn">Book Appointment</button> {% endcomment %}
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="doctor-card">
+              <h5>Dr. Bansal Jatinder Paul</h5>
+              <img src="{% static 'homepage/images/c41.jpg' %}" alt="Dr. Bansal Jatinder Paul">
+              <p class="doctor-specialization card-neurology" style="font-size:1.4rem;">Neurologist</p>
+              <p class="doctor-experience" style="font-size:1.6rem;">Experience: 12+ years</p>
+              <p style="font-size:1.2rem; font-weight: bold;">Capital Hospital, Bhubaneswar, Odisha</p>
+              {% comment %} <button class="appointment-btn">Book Appointment</button> {% endcomment %}
+          </div>
+      </div>
+
+      <div class="col-md-4 mb-4">
+          <div class="doctor-card">
+              <h5>Dr. Radhika Swaroop</h5>
+              <img src="{% static 'homepage/images/s72.jpg' %}" alt="Dr. Radhika Swaroop">
+              <p class="doctor-specialization card-orthopedics" style="font-size:1.4rem;">Orthopedic Surgeon</p>
+              <p class="doctor-experience" style="font-size:1.6rem;">Experience: 10+ years</p>
+              <p style="font-size:1.2rem; font-weight: bold;">Sum Hospital, Bhubaneswar, Odisha</p>
+              {% comment %} <button class="appointment-btn">Book Appointment</button> {% endcomment %}
+          </div>
+      </div>
+  </div>
+</div>
+
+<br><br><br><br>
+
+</div>
+<div id="footer" class="card bg-dark text-white mt-5">
+  <div class="card-body">
+    <div class="row justify-content-center">
+          <!-- Left Side: Contact Info -->
+          <div class="col-md-4">
+              <h4 class="footer-heading">Contact Information</h4>
+              <ul class="footer-list">
+                  <li><strong>Email:</strong> <a href="mailto:medintel@gmail.com" class="footer-link">medintel@gmail.com</a></li>
+                  <li><strong>Contact No:</strong> <a href="tel:+918328921788" class="footer-link">+91 8328921788</a></li>
+                  <li><strong>Address:</strong> Silicon University, Bhubaneswar, Odisha, India</li>
+              </ul>
+
+              <h4 class="footer-heading">Quick Links</h4>
+              <ul class="footer-list">
+                  <li><a href="#" class="footer-link">About Us</a></li>
+                  <li><a href="#" class="footer-link">Privacy Policy</a></li>
+                  <li><a href="#" class="footer-link">Terms & Conditions</a></li>
+              </ul>
+
+              <h4 class="footer-heading">Follow Us</h4>
+              <div class="footer-icons">
+                  <a href="#" target="_blank" class="social-icon"><i class="fab fa-facebook-f"></i></a>
+                  <a href="#" target="_blank" class="social-icon"><i class="fab fa-twitter"></i></a>
+                  <a href="#" target="_blank" class="social-icon"><i class="fab fa-instagram"></i></a>
+                  <a href="#" target="_blank" class="social-icon"><i class="fab fa-linkedin"></i></a>
+              </div>
+
+              <div class="footer-copyright mt-3">
+                  &copy; 2025 <a href="#" class="text-white footer-link">MedIntel.com</a> | All Rights Reserved
+              </div>
+          </div>
+
+          <!-- Right Side: Embedded Google Map -->
+          <div class="col-md-6">
+              <h4 class="footer-heading">Find Us</h4>
+              <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3385.211569649361!2d85.80376107469674!3d20.350682310723464!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3a1908e064769e73%3A0x9288172f3a98c7a4!2sSilicon%20University!5e1!3m2!1sen!2sin!4v1741313964295!5m2!1sen!2sin" 
+                  width="100%" 
+                  height="300" 
+                  style="border:0; border-radius: 10px; box-shadow: 0px 0px 10px rgba(255, 255, 255, 0.2);" 
+                  allowfullscreen="" 
+                  loading="lazy" 
+                  referrerpolicy="no-referrer-when-downgrade">
+              </iframe>
+          </div>
+      </div>
+  </div>
+</div>
+
+</div>
+</div>
+
+
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://kit.fontawesome.com/a076d05399.js" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+  
+
+    
+{% endblock %}

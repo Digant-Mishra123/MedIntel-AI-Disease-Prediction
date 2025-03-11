@@ -1,0 +1,121 @@
+{% extends "basic.html" %}
+{% load static %}
+
+{% block head %}
+    <link rel="stylesheet" href="{% static 'doctor/signup_form/signup.css' %}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" 
+          integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" 
+          crossorigin="anonymous">
+{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <form action="signup_doctor" method="POST" class="signup-form mx-auto mt-5" style="max-width: 450px;">
+            <h1 class="text-center">SIGN UP AS DOCTOR</h1>
+            <br>
+            {% csrf_token %}
+            
+            <center>
+                {% for message in messages %}
+                    <div class="alert alert-warning" role="alert">
+                        <h3 style="color: red;">{{ message }}</h3>
+                    </div>
+                {% endfor %}
+            </center>
+
+            <div class="form-group">
+                <label>Username</label>
+                <input class="form-control" type="text" placeholder="Username" name="username">
+            </div>
+
+            <div class="form-group">
+                <label>Name</label>
+                <input class="form-control" type="text" placeholder="Name" name="name">
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input class="form-control" type="email" placeholder="Email" name="email">
+            </div>
+
+            <div class="form-group">
+                <label>Age</label>
+                <input class="form-control" type="number" placeholder="Age" name="age">
+            </div>
+
+            <div class="form-group">
+                <label>Gender</label>
+                <div>
+                    <input type="radio" name="gender" value="male" checked> Male
+                    <input type="radio" name="gender" value="female"> Female
+                    <input type="radio" name="gender" value="other"> Other
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <input class="form-control" type="text" placeholder="Address" name="address">
+            </div>
+
+            <div class="form-group">
+                <label>Mobile</label>
+                <input class="form-control" type="number" placeholder="Mobile" name="mobile">
+            </div>
+
+            <div class="form-group">
+                <label>Registration Number</label>
+                <input class="form-control" type="text" placeholder="Registration Number" name="registration_no">
+            </div>
+
+            <div class="form-group">
+                <label>Year of Registration</label>
+                <input class="form-control" type="date" name="year_of_registration">
+            </div>
+
+            <div class="form-group">
+                <label>Qualification</label>
+                <input class="form-control" type="text" placeholder="Qualification" name="qualification">
+            </div>
+
+            <div class="form-group">
+                <label>State Medical Council</label>
+                <input class="form-control" type="text" placeholder="State Medical Council" name="State_Medical_Council">
+            </div>
+
+            <div class="form-group">
+              <label>Specialization</label>
+              <select class="form-control" name="specialization" id="specialization" onchange="toggleSpecializationInput()">
+                  <option disabled selected>Select Specialization</option>
+                  <option>Rheumatologist</option>
+                  <option>Cardiologist</option>
+                  <option>ENT specialist</option>
+                  <option>Orthopedist</option>
+                  <option>Neurologist</option>
+                  <option>Allergist/Immunologist</option>
+                  <option>Urologist</option>
+                  <option>Dermatologist</option>
+                  <option>Gastroenterologist</option>
+                  <option value="other">Other</option>
+              </select>
+          </div>
+          
+          <div class="form-group" id="otherSpecializationDiv" style="display: none;">
+              <label>Enter Specialization</label>
+              <input type="text" class="form-control" name="other_specialization" id="otherSpecialization" placeholder="Enter your specialization">
+          </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input class="form-control" type="password" placeholder="Password" name="password">
+            </div>
+
+            <div class="form-group">
+                <label>Retype Password</label>
+                <input class="form-control" type="password" placeholder="Retype Password" name="password1">
+            </div>
+
+            <button type="submit" class="btn btn-primary btn-block mb-3">Register</button>
+        </form>
+    </div>
+{% endblock %}

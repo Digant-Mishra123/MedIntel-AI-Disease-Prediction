@@ -1,0 +1,299 @@
+﻿{% load static %}
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge"> 
+
+
+    <script
+  src="https://code.jquery.com/jquery-3.4.1.js"
+  integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="
+  crossorigin="anonymous"></script>
+
+    <!-- Bootstrap CSS -->
+  
+    <script src="{% static 'jquery.js' %}"></script>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="{% static 'homepage/css/bootstrap.min.css' %}">
+    <title>MedIntel</title>
+    <link rel="stylesheet" href="{% static 'homepage/css/css.css' %}">
+    
+
+   
+  <style>
+    *{
+        margin:0;
+        padding:0;
+    }
+   .img {
+    position: relative;
+    float: left;
+    width:  200px;
+    height: 200px;
+    background-position: 100% 100%;
+    background-repeat:   no-repeat;
+    background-size:     cover;
+}
+
+
+  body{
+
+  background-image: url( "{% static 'homepage/images/bg.jpeg' %}");
+  background-attachment: fixed;
+  opacity: 0.93;
+  background-repeat: no-repeat;
+  
+  background-size:cover;
+
+  
+  }
+  /* Navbar Hover Effect */
+.nav-hover {
+    position: relative;
+    color: white;
+    font-weight: 500;
+    transition: all 0.3s ease-in-out;
+}
+
+.nav-hover:hover {
+    transform: scale(1.1);
+    color: #ffd700 !important;
+}
+
+/* Logout Button Styling */
+.logout-btn {
+    font-size: 14px;
+    padding: 6px 12px;
+    border-radius: 20px;
+    transition: all 0.3s;
+}
+
+.logout-btn:hover {
+    background-color: red;
+    color: white;
+}
+
+/* Modal Enhancements */
+.modal-header {
+    border-bottom: none;
+}
+/* Fix for Sign In button hover issue */
+.btn-outline-light:hover {
+    background-color: #ffffff !important; /* White background */
+    color: #1b405a !important; /* Dark text for contrast */
+    border-color: #ffffff !important;
+}
+
+/* Fix for Sign Up button hover issue */
+.btn-dark:hover {
+    background-color: #444 !important; /* Dark grey to avoid pure black */
+    color: #ffd700 !important; /* Gold text on hover */
+}
+</style>
+
+    {% block head %}
+
+    {% endblock %}
+
+
+  
+  </head>
+
+
+  <body>
+
+
+
+      <div class="container-fluid">
+        </div>
+        <nav class="navbar navbar-expand-lg navbar-dark" style="background: linear-gradient(135deg, #2b5876, #4e4376); padding: 10px 20px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);">
+          <a class="navbar-brand" href="{% url 'home' %}" style="font-size: 22px; letter-spacing: 1px;"><h2>MedIntel</h2><h6 class="font-weight-bold">AI Driven Health Care and Prediction</h6></a>
+          <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent">
+              <span class="navbar-toggler-icon"></span>
+          </button>
+      
+          <div class="collapse navbar-collapse text-center" id="navbarSupportedContent">
+              <ul class="navbar-nav ml-auto">
+                  <li class="nav-item">
+                      <a class="nav-link nav-hover" style="color:white;font-size:20px;" href="{% url 'home' %}">Home</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link nav-hover" style="color:white;font-size:20px;" href="{% url 'home' %}">About</a>
+                  </li>
+                  <li class="nav-item">
+                      <a class="nav-link nav-hover" style="color:white;font-size:20px;" href="{% url 'home' %}">Contact</a>
+                  </li>
+      
+                  {% if user.is_authenticated %}
+                      {% if user.patient %}
+                          <li class="nav-item">
+                              <a class="nav-link text-success font-weight-bold" style="font-size:20px;">Hello, {{user.patient.name}}</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link nav-hover" style="font-size:20px;" href="{% url 'patient_ui' %}">Profile</a>
+                          </li>
+                      {% endif %}
+                      
+                      {% if user.doctor %}
+                          <li class="nav-item">
+                              <a class="nav-link text-warning font-weight-bold" style="font-size:20px;">Hello, Dr. {{user.doctor.name}}</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link nav-hover" style="font-size:20px;" href="{% url 'doctor_ui' %}">Profile</a>
+                          </li>
+                      {% endif %}
+      
+                      {% if user.is_superuser %}
+                          <li class="nav-item">
+                              <a class="nav-link text-danger font-weight-bold" style="font-size:20px;">Admin: {{user.username}}</a>
+                          </li>
+                          <li class="nav-item">
+                              <a class="nav-link nav-hover" style="font-size:20px;" href="{% url 'admin_ui' %}" style="color:white;font-size:20px;">Profile</a>
+                          </li>
+                      {% endif %}
+      
+                      <li class="nav-item">
+                          <button class="btn btn-outline-light ml-3 logout-btn" style="font-size:20px;" data-toggle="modal" data-target="#logout-modal">Log out</button>
+                      </li>
+      
+                      <!-- Logout Modal -->
+                      <div class="modal fade" id="logout-modal" tabindex="-1" role="dialog">
+                          <div class="modal-dialog modal-sm">
+                              <div class="modal-content">
+                                  <div class="modal-header bg-danger text-white">
+                                      <h4 class="modal-title">Logout <i class="fa fa-lock"></i></h4>
+                                  </div>
+                                  <div class="modal-body">
+                                      <i class="fa fa-question-circle"></i> 
+                                      <span class="text-success">{{user.patient.name}}</span>, Are you sure you want to log out?
+                                  </div>
+                                  <div class="modal-footer">
+                                      <a href="{% url 'logout' %}" class="btn btn-danger btn-block">Logout</a>
+                                  </div>
+                              </div>
+                          </div>
+                      </div>
+                  {% else %}
+                      <li class="nav-item">
+                          <a class="nav-link btn btn-outline-light ml-2 px-3 rounded-pill" style="color:white;font-size:20px;" data-toggle="modal" data-target=".bd-example-modal-lg2">Sign Up</a>
+                      </li>
+                      <li class="nav-item">
+                          <a class="nav-link btn btn-outline-light ml-2 px-3 rounded-pill" style="color:white;font-size:20px;" data-toggle="modal" data-target=".bd-example-modal-lg">Sign In</a>
+                      </li>
+                  {% endif %}
+              </ul>
+          </div>
+      </nav>
+    
+<!-- Large modal 1 For Signin-->
+<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <center>
+                <h1>Sign-In As</h1>
+            </center>
+            <br><br>
+  
+            <center>
+                <form>
+                    <div class="container mt-5 mb-5">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'sign_in_admin' %}">
+                                    <img  alt="admin" src="{% static 'homepage/images/admin.png' %}"  class="img">
+                                </a>
+                            </div>
+  
+                            <div class="col">
+                                <a href="{% url 'sign_in_doctor' %}">
+                                    <img  alt="doctor" src="{% static 'homepage/images/doctor.png' %}"  class="img">
+                                </a>
+                            </div>
+  
+                            <div class="col">
+                                <a href="{% url 'sign_in_patient' %}">
+                                    <img  alt="patient" src="{% static 'homepage/images/patient.png' %}"  class="img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </div>
+</div>
+
+<!-- Large modal 2 For Signup-->
+<div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg2">
+        <div class="modal-content">
+            <center>
+                <h1>Sign-Up As</h1>
+            </center>
+            <br><br>
+            <center>
+                <form>
+                    <div class="container mt-5 mb-5">
+                        <div class="row">
+                            <div class="col">
+                                <a href="{% url 'signup_doctor' %}">
+                                    <img  alt="doctor" src="{% static 'homepage/images/doctor.png' %}"  class="img">
+                                </a>
+                            </div>
+  
+                            <div class="col">
+                                <a href="{% url 'signup_patient' %}">
+                                    <img  alt="patient" src="{% static 'homepage/images/patient.png' %}"  class="img">
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </center>
+        </div>
+    </div>
+</div>
+
+
+
+  {% block body %}
+
+  {% endblock %}
+
+
+  {% block JavaScript %}
+  <script>
+    function toggleSpecializationInput() {
+        var specialization = document.getElementById("specialization").value;
+        var otherSpecializationDiv = document.getElementById("otherSpecializationDiv");
+  
+        if (specialization === "other") {
+            otherSpecializationDiv.style.display = "block";
+            document.getElementById("otherSpecialization").setAttribute("required", "true");
+        } else {
+            otherSpecializationDiv.style.display = "none";
+            document.getElementById("otherSpecialization").removeAttribute("required");
+        }
+    }
+  </script>
+  {% endblock %}
+
+</div>
+
+
+
+   <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+   
+    <script src="https://code.jquery.com/jquery-3.4.1.js"integrity="sha256-WpOohJOqMqqyKL9FccASB9O0KwACQJpFTUBLTYOVvVU="crossorigin="anonymous"></script> 
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+ 
+
+
+</body>
+</html>
