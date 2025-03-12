@@ -83,7 +83,7 @@ DATABASES = {
         'ENGINE': 'django.db.backends.postgresql',
         'NAME': 'medintel',
         'USER': 'postgres',
-        'PASSWORD': 'digant',
+        'PASSWORD': 'grepost',
         'HOST': 'localhost'
     }
 }
