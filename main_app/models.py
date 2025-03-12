@@ -18,6 +18,11 @@ class patient(models.Model):
 
 
 class doctor(models.Model):
+    STATUS_CHOICES = [
+        ('pending', 'Pending'),
+        ('accepted', 'Accepted'),
+        ('rejected', 'Rejected'),
+    ]
 
     user = models.OneToOneField(User, on_delete=models.CASCADE, primary_key=True)
     is_patient = models.BooleanField(default=False)
@@ -33,6 +38,7 @@ class doctor(models.Model):
     State_Medical_Council = models.CharField(max_length = 30)
     specialization = models.CharField(max_length = 30)
     rating = models.IntegerField(default=0)
+    status = models.CharField(max_length=10, choices=STATUS_CHOICES, default='pending')
 
 class rating_review(models.Model):
 
